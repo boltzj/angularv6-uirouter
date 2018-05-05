@@ -2,26 +2,41 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
-## Development server
+Adding `rxjs-compat` to ensure backward compat of rxjs between v5 and v6.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Adding Angular UI Router and add a simple app state.
 
-## Code scaffolding
+Everything is ok until you activate `buildOptimizer`. It's building without any error or warning, but at run time:
+The bundled import of [src/transition/interface.ts](https://github.com/ui-router/core/blob/master/src/transition/interface.ts) is empty.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Without buildOptimizer these enums are exported:
+```
+export enum TransitionHookPhase {
+  CREATE,
+  BEFORE,
+  RUN,
+  SUCCESS,
+  ERROR,
+}
+export enum TransitionHookScope {
+  TRANSITION,
+  STATE,
+}
+```
+and are transformed in `es5`:
+```
+{
+  TransitionHookPhase: {0: "CREATE", 1: "BEFORE", 2: "RUN", 3: "SUCCESS", 4: "ERROR", CREATE: 0, BEFORE: 1, RUN: 2, SUCCESS: 3, ERROR: 4},
+  TransitionHookScope: {0: "TRANSITION", 1: "STATE", TRANSITION: 0, STATE: 1}
+}
+```
+
+
+## Objective
+
+Reproduce the issue #171 on UIRouter Core: [Angular v6 build with AOT and buildOptimizer failed at runtime](https://github.com/ui-router/core/issues/171)
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build --prod` for the `production build` project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
