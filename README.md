@@ -36,6 +36,14 @@ and are transformed in `es5`:
 
 Reproduce the issue #171 on UIRouter Core: [Angular v6 build with AOT and buildOptimizer failed at runtime](https://github.com/ui-router/core/issues/171)
 
+## QuickFix
+
+To upgrade your app to angular 6, do your regular `ng update` and simply lock your version of `@angular-devkit/build-optimizer` to version `0.5.13` instead of `0.6.0` to your devDependencies.
+
+```sh
+yarn add @angular-devkit/build-optimizer@0.5.3 -D
+```
+
 ## Build
 
 Run `ng build --prod` for the `production build` project. The build artifacts will be stored in the `dist/` directory.
