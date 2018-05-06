@@ -23,7 +23,7 @@ export enum TransitionHookScope {
   STATE,
 }
 ```
-and are transformed in `es5`:
+and should be exported as `es5`:
 ```
 {
   TransitionHookPhase: {0: "CREATE", 1: "BEFORE", 2: "RUN", 3: "SUCCESS", 4: "ERROR", CREATE: 0, BEFORE: 1, RUN: 2, SUCCESS: 3, ERROR: 4},
